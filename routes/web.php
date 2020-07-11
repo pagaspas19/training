@@ -22,6 +22,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 // Route::view('create', 'articles.create');
 // Route::view('show', 'articles.show');
+Route::post('/comments', 'CommentController@store');
 
 Route::middleware('auth')->group(function () {
     Route::get('articles', 'ArticleController@index')->name('articles.index');

@@ -4,6 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <div class="row justify-content-end my-3">
+                <a href="{{ route('articles.index') }}" class="btn btn-success mx-3">Article List</a>
+            </div>
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
