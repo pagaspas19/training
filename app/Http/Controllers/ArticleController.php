@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Http\Requests\ArticleRequest;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -26,14 +27,23 @@ class ArticleController extends Controller
         return view('articles.show', compact('article'));
     }
 
-    public function store()
+    public function store(ArticleRequest $request)
     {
         $article = Article::create([
-            'title' => request('title'),
-            'content' => request('content'),
-            'tag' => request('tag'),
+            'title' => $request->title,
+            'content' => $request->content,
+            'tag' => $request->tag,
             'user_id' => auth()->user()->id,
         ]);
+
+        return redirect()->route('articles.show', $article);
+    }
+
+    public function update(Article $article)
+    {
+        $this->authorize('update', $article);
+
+        $article = tap($article)->update(request()->all());
 
         return redirect()->route('articles.show', $article);
     }

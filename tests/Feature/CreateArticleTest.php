@@ -3,18 +3,20 @@
 namespace Tests\Feature;
 
 use App\Article;
-use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CreateArticleTest extends TestCase
 {
+    public function setUp() : void
+    {
+        parent::setUp();
+
+        $this->signIn();
+    }
+
     /** @test */
     public function a_user_can_go_to_create_form()
     {
-        $this->signIn();
-
         $this->get('/articles/create')
             ->assertSeeText('Create article');
     }
@@ -22,10 +24,7 @@ class CreateArticleTest extends TestCase
     /** @test */
     public function a_user_can_create_new_article()
     {
-        $this->withoutExceptionHandling();
-        $this->signIn();
-
-        $article = factory(Article::class)->raw();
+        $article = raw(Article::class);
 
         $this->post('/articles', $article)
              ->assertRedirect('/articles/1');
@@ -36,5 +35,12 @@ class CreateArticleTest extends TestCase
             'tag' => $article['tag'],
             'user_id' => auth()->user()->id
         ]);
+    }
+
+    /** @test */
+    public function all_fields_are_required()
+    {
+        $this->post('/articles', [])
+            ->assertSessionHasErrors(['title', 'content', 'tag']);
     }
 }

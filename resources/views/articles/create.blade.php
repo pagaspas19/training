@@ -21,7 +21,6 @@
                                     class="form-control @error('title') is-invalid @enderror"
                                     name="title"
                                     value="{{ old('title') }}"
-                                    required
                                     autofocus
                                 />
 
@@ -44,7 +43,6 @@
                                     class="form-control @error('content') is-invalid @enderror"
                                     name="content"
                                     value="{{ old('content') }}"
-                                    required
                                 ></textarea>
 
                                 @error('content')
@@ -59,7 +57,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">Tag</label>
 
                             <div class="col-md-6">
-                                <select name="tag" id="tag" class="form-control" required>
+                                <select name="tag" id="tag" class="form-control">
                                     <option value="" disabled selected>Select a tag</option>
                                     <option value="Food">Food</option>
                                     <option value="Travel">Travel</option>
